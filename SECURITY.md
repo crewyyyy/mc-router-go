@@ -1,6 +1,6 @@
 # Security policy
 
-Private vulnerability reporting is not configured, and there are no supported released versions. Do not disclose vulnerabilities in public issues. Before treating this project as a stable release, the maintainer should enable GitHub private vulnerability reporting (or document another private contact) and list supported versions here. Transparent mode remains experimental.
+GitHub private vulnerability reporting is enabled for this repository. Report suspected vulnerabilities through the repository's **Security** tab using private reporting; do not disclose them in public issues. There are no supported released versions yet. Supported versions and response expectations will be listed here when releases are published. Transparent mode remains experimental.
 
 Do not report vulnerabilities in public issues or include production IPs/configs/logs. Once a reporting channel is announced, use it for parser flaws, source-spoofing/route issues, unsafe network cleanup, privilege escalation or denial-of-service findings.
 

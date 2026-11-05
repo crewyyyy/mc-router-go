@@ -7,7 +7,7 @@ This document separates automated/unit evidence, synthetic TCP evidence, namespa
 - Go toolchain tested: Go 1.27.3, Linux amd64.
 - Reference implementation: itzg/mc-router commit `63534c550395a4b54ac4372fb8f2d108ee1bd213`.
 - Runtime modules: BurntSushi/toml v1.6.0, golang.org/x/net v0.62.0, golang.org/x/text v0.43.0; exact sums in `go.sum`.
-- A local Git repository and initial source commit now exist; no remote, tag or release has been published yet. This is not a released archive.
+- Public source repository: https://github.com/crewyyyy/mc-router-go. Initial source commit is published; no tag or binary release exists yet. This is not a released archive.
 
 ## Automated checks
 
