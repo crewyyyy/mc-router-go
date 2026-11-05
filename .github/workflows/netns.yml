@@ -1,0 +1,23 @@
+name: Privileged namespace integration
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  netns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.27.3'
+          check-latest: false
+          cache: true
+      - name: Build fixture binary
+        run: CGO_ENABLED=0 go build -trimpath -o "$RUNNER_TEMP/mc-router" ./cmd/mc-router
+      - name: Run isolated network proof
+        run: sudo timeout 120s bash tests/network_integration.sh "$RUNNER_TEMP/mc-router"

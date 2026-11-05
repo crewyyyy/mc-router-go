@@ -1,0 +1,58 @@
+version: 2
+project_name: mc-router
+
+before:
+  hooks:
+    - go mod tidy
+    - go mod verify
+
+builds:
+  - id: mc-router
+    main: ./cmd/mc-router
+    binary: mc-router
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    ldflags:
+      - -s -w -X main.version={{ .Version }} -X main.commit={{ .Commit }} -X main.buildDate={{ .CommitDate }}
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE.txt
+      - THIRD_PARTY_NOTICES.md
+      - VALIDATION.md
+      - CHANGELOG.md
+      - CONTRIBUTING.md
+      - SECURITY.md
+      - third_party/GO-BSD-LICENSE.txt
+      - configs/config.example.toml
+      - config.transparent.example.toml
+      - deploy/NETWORK.md
+      - deploy/network.sh
+      - deploy/network-guard.py
+      - deploy/systemd/*.service
+      - deploy/systemd/*.conf
+      - docs/*.md
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+release:
+  prerelease: auto
+
+changelog:
+  use: git
+  filters:
+    include:
+      - '^(feat|fix|perf|refactor|build|ci|chore|docs|test|deploy)(\([^)]+\))?!?:'

@@ -1,0 +1,16 @@
+[Unit]
+Description=Owned isolated network for transparent Minecraft routing
+After=network.target
+Before=mc-router.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/bash /usr/local/libexec/mc-router-go/network.sh up
+ExecStop=/bin/bash /usr/local/libexec/mc-router-go/network.sh down
+TimeoutStartSec=30
+TimeoutStopSec=30
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

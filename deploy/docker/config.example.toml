@@ -1,0 +1,22 @@
+# Both backend containers must join the same user-defined network as mc-router.
+# Replace these service names with the DNS names on that network.
+[server]
+listen = "0.0.0.0:25565"
+
+[routes]
+"horizon.example.com" = "horizon:25567"
+
+[default]
+backend = "forge:25568"
+
+[limits]
+max_connections = 256
+max_pending_handshakes = 64
+max_connections_per_ip = 64
+handshake_timeout = "5s"
+handshake_max_bytes = 2048
+dial_timeout = "3s"
+idle_timeout = "30m"
+
+[transparent]
+enabled = false

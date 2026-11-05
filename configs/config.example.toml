@@ -1,0 +1,34 @@
+# Standard TCP mode: no root, packet filters, or kernel privileges required.
+[server]
+listen = "0.0.0.0:25565"
+
+[routes]
+"horizon.example.com" = "127.0.0.1:25567"
+
+[default]
+backend = "127.0.0.1:25568"
+
+[limits]
+max_connections = 256
+max_pending_handshakes = 64
+max_connections_per_ip = 64
+max_ip_entries = 4096
+connection_rate = 50.0
+connection_burst = 200
+ip_connection_rate = 10.0
+ip_connection_burst = 40
+ip_entry_ttl = "10m"
+handshake_timeout = "5s"
+handshake_max_bytes = 2048
+dial_timeout = "3s"
+write_timeout = "15s"
+idle_timeout = "30m"
+half_close_timeout = "5s"
+shutdown_timeout = "10s"
+stats_interval = "30s"
+
+[transparent]
+enabled = false
+
+[logging]
+level = "info"

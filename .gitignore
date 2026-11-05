@@ -1,0 +1,14 @@
+/build/
+/test-results/
+*.test
+*.prof
+/dist/
+/coverage.out
+/coverage.html
+/mc-router
+/config.toml
+/config.docker.toml
+.env
+.env.*
+*.log
+.DS_Store

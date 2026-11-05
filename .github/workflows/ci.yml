@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.27.3'
+          check-latest: false
+          cache: true
+      - name: Verify formatting
+        run: test -z "$(gofmt -l ./cmd ./internal)"
+      - name: Verify dependencies
+        run: go mod verify
+      - name: Vet
+        run: go vet ./...
+      - name: Race tests
+        run: go test -race -count=1 -timeout=90s ./...
+      - name: Build native binary
+        run: CGO_ENABLED=0 go build -trimpath -o /tmp/mc-router ./cmd/mc-router
+      - name: Build Linux release targets
+        shell: bash
+        run: |
+          for arch in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=$arch go build -trimpath -o "/tmp/mc-router-linux-$arch" ./cmd/mc-router
+          done
+      - name: Validate standard config
+        run: /tmp/mc-router --check-config --config configs/config.example.toml
+      - name: Validate Docker config
+        run: /tmp/mc-router --check-config --config deploy/docker/config.example.toml
+      - name: Validate transparent config
+        run: /tmp/mc-router --check-config --config config.transparent.example.toml
+      - name: Check Go vulnerability database
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
+      - name: Validate Docker image
+        run: docker build --pull --tag mc-router:ci .

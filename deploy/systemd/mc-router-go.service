@@ -1,0 +1,35 @@
+[Unit]
+Description=Hardened Minecraft hostname router (Go)
+After=network.target
+
+[Service]
+Type=simple
+User=mc-router
+Group=mc-router
+WorkingDirectory=/var/lib/mc-router
+ExecStart=/usr/local/bin/mc-router --config /etc/mc-router/config.toml
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillSignal=SIGTERM
+NoNewPrivileges=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=true
+MemoryDenyWriteExecute=true
+LimitNOFILE=8192
+TasksMax=128
+MemoryHigh=256M
+MemoryMax=512M
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

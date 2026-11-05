@@ -1,0 +1,25 @@
+services:
+  mc-router:
+    build:
+      context: .
+      args:
+        VERSION: "${VERSION:-dev}"
+    image: mc-router:local
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "25565:25565/tcp"
+    volumes:
+      - ./config.docker.toml:/etc/mc-router/config.toml:ro
+    networks:
+      - minecraft
+
+networks:
+  minecraft:
+    external: true
+    name: minecraft
