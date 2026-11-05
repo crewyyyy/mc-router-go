@@ -2,6 +2,10 @@
 
 A small Minecraft Java TCP router that reads the initial hostname handshake and forwards the original byte stream to a configured backend. Derived in part from [itzg/mc-router](https://github.com/itzg/mc-router), commit `63534c550395a4b54ac4372fb8f2d108ee1bd213`, MIT. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
+<p align="center">
+  <img src="assets/readme-banner.png" alt="Minecraft router directing player connections to separate game servers" width="760">
+</p>
+
 ## Features
 
 - Static hostname routes and an optional default backend.
